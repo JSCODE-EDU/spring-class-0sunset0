@@ -1,6 +1,6 @@
 package com.springhello.domain.product.service;
 
-import com.springhello.domain.product.api.MonetaryUnit;
+import com.springhello.domain.product.entity.MonetaryUnit;
 import com.springhello.domain.product.dto.ProductResponse;
 import com.springhello.domain.product.dto.SaveProductRequest;
 import com.springhello.domain.product.exception.DuplicateNameException;
@@ -8,7 +8,6 @@ import com.springhello.domain.product.exception.ProductNotFoundException;
 import com.springhello.domain.product.repository.ProductRepository;
 import com.springhello.domain.product.entity.Product;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,42 +25,40 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public Long save(SaveProductRequest saveProductRequest) throws DuplicateNameException {
+    public Long save(SaveProductRequest saveProductRequest) {
         //상품명 중복 검사
-        checkProductDuplicate(saveProductRequest);
+        checkProductDuplicate(saveProductRequest.getName());
         return productRepository.save(saveProductRequest.getName(), saveProductRequest.getPrice());
     }
 
-    private void checkProductDuplicate(SaveProductRequest saveProductRequest) throws DuplicateNameException {
-        Optional<Product> duplicateProduct = productRepository.findAll().stream()
-                .filter(p -> p.getName().equals(saveProductRequest.getName()))
-                .findAny();
-        if (duplicateProduct.isPresent()) {
+    private void checkProductDuplicate(String name) {
+        if (isExistedProduct(name)) {
             throw new DuplicateNameException();
         }
     }
 
     public ProductResponse findOneById(Long id, String monetaryUnit) {
-        Product findProduct = productRepository.findOneById(id);
+        Product findProduct = productRepository.findOneById(id).get();
         ProductResponse productResponse = ProductResponse.from(findProduct);
         return getProductResponse(monetaryUnit, productResponse);
     }
 
-    public ProductResponse findOneByName(String name, String monetaryUnit) throws ProductNotFoundException {
+    public ProductResponse findOneByName(String name, String monetaryUnit) {
         // 없는 상품명으로 조회했을 때 조회 실패
         checkProductNotFound(name);
-        Product findProduct = productRepository.findOneByName(name);
+        Product findProduct = productRepository.findOneByName(name).get();
         ProductResponse productResponse = ProductResponse.from(findProduct);
         return getProductResponse(monetaryUnit, productResponse);
     }
 
-    private void checkProductNotFound(String name) throws ProductNotFoundException {
-        Optional<Product> product = productRepository.findAll().stream()
-                .filter(p -> p.getName().equals(name))
-                .findAny();
-        if (!product.isPresent()) {
+    private void checkProductNotFound(String name) {
+        if (!isExistedProduct(name)) {
             throw new ProductNotFoundException();
         }
+    }
+
+    private boolean isExistedProduct(String name) {
+        return productRepository.findOneByName(name).isPresent();
     }
 
     private ProductResponse getProductResponse(String monetaryUnit, ProductResponse productResponse) {

@@ -1,8 +1,7 @@
 package com.springhello.domain.product.dto;
 
-import com.springhello.domain.product.api.MonetaryUnit;
+import com.springhello.domain.product.entity.MonetaryUnit;
 import com.springhello.domain.product.entity.Product;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter

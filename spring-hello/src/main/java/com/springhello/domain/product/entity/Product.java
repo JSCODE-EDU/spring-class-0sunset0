@@ -1,8 +1,5 @@
 package com.springhello.domain.product.entity;
 
-import com.springhello.domain.product.api.MonetaryUnit;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 

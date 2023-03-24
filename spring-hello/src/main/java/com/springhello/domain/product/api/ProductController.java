@@ -22,7 +22,7 @@ public class ProductController {
     }
 
     @PostMapping("/save")
-    public Long save(@RequestBody SaveProductRequest saveProductRequest) throws DuplicateNameException {
+    public Long save(@RequestBody SaveProductRequest saveProductRequest) {
         return productService.save(saveProductRequest);
     }
 
@@ -32,7 +32,7 @@ public class ProductController {
     }
 
     @GetMapping(value = "/product", params = "name")
-    public ProductResponse findOneByName(@RequestParam String name, @RequestParam(required = false) String monetaryUnit) throws ProductNotFoundException {
+    public ProductResponse findOneByName(@RequestParam String name, @RequestParam(required = false) String monetaryUnit) {
         return productService.findOneByName(name, monetaryUnit);
     }
 
