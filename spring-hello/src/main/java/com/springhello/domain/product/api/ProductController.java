@@ -2,9 +2,9 @@ package com.springhello.domain.product.api;
 
 import com.springhello.domain.product.dto.ProductResponse;
 import com.springhello.domain.product.dto.SaveProductRequest;
-import com.springhello.domain.product.exception.DuplicateNameException;
-import com.springhello.domain.product.exception.ProductNotFoundException;
 import com.springhello.domain.product.service.ProductService;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
