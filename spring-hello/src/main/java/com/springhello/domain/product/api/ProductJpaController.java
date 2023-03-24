@@ -2,9 +2,8 @@ package com.springhello.domain.product.api;
 
 import com.springhello.domain.product.dto.ProductResponse;
 import com.springhello.domain.product.dto.SaveProductRequest;
+import com.springhello.domain.product.service.ProductJpaService;
 import com.springhello.domain.product.service.ProductService;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +11,9 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class ProductController {
+public class ProductJpaController {
 
-    private final ProductService productService;
+    private final ProductJpaService productService;
 
     @GetMapping("/products")
     public List<ProductResponse> findAll() {
@@ -26,14 +25,16 @@ public class ProductController {
         return productService.save(saveProductRequest);
     }
 
+
+    //TODO 원화/달러 구분해서 보여주기 추가
     @GetMapping(value = "/product", params = "id")
     public ProductResponse findOneById(@RequestParam Long id, @RequestParam(required = false) String monetaryUnit) {
-        return productService.findOneById(id, monetaryUnit);
+        return productService.findOneById(id);
     }
 
     @GetMapping(value = "/product", params = "name")
     public ProductResponse findOneByName(@RequestParam String name, @RequestParam(required = false) String monetaryUnit) {
-        return productService.findOneByName(name, monetaryUnit);
+        return productService.findOneByName(name);
     }
 
 
