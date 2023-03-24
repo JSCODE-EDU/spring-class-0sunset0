@@ -31,9 +31,8 @@ public class ProductEntity {
         this.price = price;
     }
 
-    public static ProductEntity createProduct(Long id, String name, Long price) {
+    public static ProductEntity createProduct(String name, Long price) {
         return ProductEntity.builder()
-                .id(id)
                 .name(name)
                 .price(price)
                 .build();

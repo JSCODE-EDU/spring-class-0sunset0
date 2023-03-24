@@ -26,10 +26,8 @@ public class ProductJpaService {
 
     public Long save(SaveProductRequest saveProductRequest) {
         checkProductDuplicate(saveProductRequest.getName());
-        ProductEntity productEntity = ProductEntity.builder()
-                .name(saveProductRequest.getName())
-                .price(saveProductRequest.getPrice())
-                .build();
+        ProductEntity productEntity = ProductEntity.createProduct(
+                saveProductRequest.getName(), saveProductRequest.getPrice());
         ProductEntity saveProduct = productJpaRepository.save(productEntity);
         return saveProduct.getId();
 
