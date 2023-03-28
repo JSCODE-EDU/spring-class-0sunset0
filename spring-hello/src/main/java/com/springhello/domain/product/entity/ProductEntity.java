@@ -5,9 +5,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.apachecommons.CommonsLog;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
-
+@DynamicInsert
 @Table
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
