@@ -1,15 +1,16 @@
 package com.springhello.domain.student;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 
 @Entity
 @Table
+@DynamicInsert
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Student {
     @Id
