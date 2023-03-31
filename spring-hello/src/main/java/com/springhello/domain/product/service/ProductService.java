@@ -1,19 +1,18 @@
 package com.springhello.domain.product.service;
 
+import com.springhello.domain.product.dto.response.ProductResult;
+import com.springhello.domain.product.dto.response.ProductSaveResponse;
 import com.springhello.domain.product.entity.MonetaryUnit;
-import com.springhello.domain.product.dto.ProductResponse;
-import com.springhello.domain.product.dto.SaveProductRequest;
+import com.springhello.domain.product.dto.response.ProductResponse;
+import com.springhello.domain.product.dto.request.ProductSaveRequest;
 import com.springhello.domain.product.exception.DuplicateNameException;
 import com.springhello.domain.product.exception.ProductNotFoundException;
 import com.springhello.domain.product.repository.ProductRepository;
 import com.springhello.domain.product.entity.Product;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,20 +20,24 @@ import java.util.stream.Collectors;
 public class ProductService {
     private final ProductRepository productRepository;
 
-    public List<ProductResponse> findAll() {
-        return productRepository.findAll().stream()
+    //모든 상품 찾기
+    public ProductResult findAll() {
+        List<ProductResponse> productResponses = productRepository.findAll().stream()
                 .map(p -> ProductResponse.from(p))
                 .collect(Collectors.toList());
+        return new ProductResult(productResponses);
     }
 
-    public Long save(SaveProductRequest saveProductRequest) {
-        //상품명 중복 검사
-        checkProductDuplicate(saveProductRequest.getName());
-        return productRepository.save(saveProductRequest.getName(), saveProductRequest.getPrice());
+    //상품 저장
+    public ProductSaveResponse save(ProductSaveRequest productSaveRequest) {
+        checkProductDuplicateName(productSaveRequest.getName());
+        Long saveId = productRepository.save(productSaveRequest.getName(), productSaveRequest.getPrice());
+        return new ProductSaveResponse(saveId);
     }
 
-    private void checkProductDuplicate(String name) {
-        if (isExistedProduct(name)) {
+    //상품명 중복 검사
+    private void checkProductDuplicateName(String name) {
+        if (productRepository.findOneByName(name).isPresent()) {
             throw new DuplicateNameException();
         }
     }
@@ -47,29 +50,18 @@ public class ProductService {
 
     public ProductResponse findOneByName(String name, String monetaryUnit) {
         // 없는 상품명으로 조회했을 때 조회 실패
-        checkProductNotFound(name);
-        Product findProduct = productRepository.findOneByName(name).get();
+        Product findProduct = productRepository.findOneByName(name)
+                .orElseThrow(() -> new ProductNotFoundException());
         ProductResponse productResponse = ProductResponse.from(findProduct);
         return getProductResponse(monetaryUnit, productResponse);
     }
 
-    private void checkProductNotFound(String name) {
-        if (!isExistedProduct(name)) {
-            throw new ProductNotFoundException();
-        }
-    }
-
-    private boolean isExistedProduct(String name) {
-        return productRepository.findOneByName(name).isPresent();
-    }
 
     private ProductResponse getProductResponse(String monetaryUnit, ProductResponse productResponse) {
         if (monetaryUnit != null && monetaryUnit.equals("dollar")){
             productResponse.setMonetaryUnit(MonetaryUnit.DOLLAR);
             productResponse.setPrice(changeToDollar(productResponse.getPrice()));
-            return productResponse;
         }
-        productResponse.setMonetaryUnit(MonetaryUnit.WON);
         return productResponse;
     }
 
