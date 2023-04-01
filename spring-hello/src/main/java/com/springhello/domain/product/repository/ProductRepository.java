@@ -33,13 +33,13 @@ public class ProductRepository {
 
     public Optional<Product> findOneById(Long id) {
         return products.stream()
-                .filter(p -> p.getId().equals(id))
+                .filter(p -> p.isSameId(id))
                 .findAny();
     }
 
     public Optional<Product> findOneByName(String name) {
         return products.stream()
-                .filter(p -> p.getName().equals(name))
+                .filter(p -> p.isSameName(name))
                 .findAny();
     }
 
