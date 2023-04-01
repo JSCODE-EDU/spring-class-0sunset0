@@ -1,4 +1,4 @@
-package com.springhello.domain.product.dto;
+package com.springhello.domain.product.dto.response;
 
 import com.springhello.domain.product.entity.MonetaryUnit;
 import com.springhello.domain.product.entity.Product;
@@ -10,7 +10,7 @@ public class ProductResponse {
 
     private String name;
     private Long price;
-    private MonetaryUnit monetaryUnit;
+    private MonetaryUnit monetaryUnit = MonetaryUnit.WON;
 
 
     private ProductResponse(String name, Long price) {

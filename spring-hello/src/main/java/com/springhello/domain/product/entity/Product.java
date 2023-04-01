@@ -27,4 +27,12 @@ public class Product {
                 .price(price)
                 .build();
     }
+
+    public boolean isSameId(Long id) {
+        return this.id.equals(id);
+    }
+
+    public boolean isSameName(String name) {
+        return this.id.equals(name);
+    }
 }

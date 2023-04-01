@@ -1,16 +1,17 @@
 package com.springhello.domain.product.service;
 
-import com.springhello.domain.product.dto.ProductResponse;
-import com.springhello.domain.product.dto.SaveProductRequest;
-import com.springhello.domain.product.entity.Product;
+
+import com.springhello.domain.product.dto.request.ProductSaveRequest;
+import com.springhello.domain.product.dto.response.ProductResponse;
+import com.springhello.domain.product.dto.response.ProductSaveResponse;
 import com.springhello.domain.product.entity.ProductEntity;
 import com.springhello.domain.product.exception.DuplicateNameException;
 import com.springhello.domain.product.repository.ProductJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,10 +25,11 @@ public class ProductJpaService {
                 .collect(Collectors.toList());
     }
 
-    public Long save(SaveProductRequest saveProductRequest) {
-        checkProductDuplicate(saveProductRequest.getName());
+    //TODO
+    public Long save(ProductSaveRequest productSaveRequest) {
+        checkProductDuplicate(productSaveRequest.getName());
         ProductEntity productEntity = ProductEntity.createProduct(
-                saveProductRequest.getName(), saveProductRequest.getPrice());
+                productSaveRequest.getName(), productSaveRequest.getPrice());
         ProductEntity saveProduct = productJpaRepository.save(productEntity);
         return saveProduct.getId();
 
