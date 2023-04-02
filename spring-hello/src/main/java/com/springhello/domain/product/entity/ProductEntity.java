@@ -1,5 +1,6 @@
 package com.springhello.domain.product.entity;
 
+import com.springhello.domain.store.entity.Store;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,6 +26,10 @@ public class ProductEntity {
     @Column
     private Long price;
 
+    @ManyToOne
+    @JoinColumn(name = "store_id")
+    private Store store;
+
     @Builder
     private ProductEntity(Long id, String name, Long price) {
         this.id = id;
@@ -32,10 +37,20 @@ public class ProductEntity {
         this.price = price;
     }
 
-    public static ProductEntity createProduct(String name, Long price) {
-        return ProductEntity.builder()
+    public static ProductEntity createProduct(String name, Long price, Store store) {
+        ProductEntity productEntity = ProductEntity.builder()
                 .name(name)
                 .price(price)
                 .build();
+        productEntity.assignStore(store);
+        return productEntity;
+    }
+
+    /**
+     * 연관관계 편의 메서드
+     */
+    public void assignStore(Store store) {
+        this.store = store;
+        store.getProducts().add(this);
     }
 }
