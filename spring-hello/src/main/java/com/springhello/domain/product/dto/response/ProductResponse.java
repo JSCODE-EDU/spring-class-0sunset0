@@ -1,6 +1,6 @@
 package com.springhello.domain.product.dto.response;
 
-import com.springhello.domain.product.entity.ProductEntity;
+import com.springhello.domain.product.entity.Product;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -21,7 +21,7 @@ public class ProductResponse {
     }
 
 
-    public static ProductResponse from(ProductEntity productEntity) {
-        return new ProductResponse(productEntity.getName(), productEntity.getPrice());
+    public static ProductResponse from(Product product) {
+        return new ProductResponse(product.getName(), product.getPrice());
     }
 }

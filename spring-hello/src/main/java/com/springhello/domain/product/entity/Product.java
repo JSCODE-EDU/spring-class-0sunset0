@@ -5,7 +5,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.extern.apachecommons.CommonsLog;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
@@ -14,7 +13,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class ProductEntity {
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,19 +30,19 @@ public class ProductEntity {
     private Store store;
 
     @Builder
-    private ProductEntity(Long id, String name, Long price) {
+    private Product(Long id, String name, Long price) {
         this.id = id;
         this.name = name;
         this.price = price;
     }
 
-    public static ProductEntity createProduct(String name, Long price, Store store) {
-        ProductEntity productEntity = ProductEntity.builder()
+    public static Product createProduct(String name, Long price, Store store) {
+        Product product = Product.builder()
                 .name(name)
                 .price(price)
                 .build();
-        productEntity.assignStore(store);
-        return productEntity;
+        product.assignStore(store);
+        return product;
     }
 
     /**

@@ -1,9 +1,8 @@
 package com.springhello.domain.product.dto.response;
 
-import com.springhello.domain.product.entity.ProductEntity;
+import com.springhello.domain.product.entity.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
 @AllArgsConstructor
@@ -11,7 +10,7 @@ public class ProductSaveResponse {
 
     private final Long id;
 
-    public static ProductSaveResponse from(ProductEntity productEntity) {
-        return new ProductSaveResponse(productEntity.getId());
+    public static ProductSaveResponse from(Product product) {
+        return new ProductSaveResponse(product.getId());
     }
 }

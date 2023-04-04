@@ -1,7 +1,7 @@
 package com.springhello.domain.store.entity;
 
 
-import com.springhello.domain.product.entity.ProductEntity;
+import com.springhello.domain.product.entity.Product;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,11 +30,11 @@ public class Store {
     private Phone phone;
 
     @OneToMany(mappedBy = "store")
-    private List<ProductEntity> products = new ArrayList<>();
+    private List<Product> products = new ArrayList<>();
 
 
     @Builder
-    private Store(String name, Address address, Phone phone, List<ProductEntity> products) {
+    private Store(String name, Address address, Phone phone, List<Product> products) {
         this.name = name;
         this.address = address;
         this.phone = phone;
