@@ -14,7 +14,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/store")
+@RequestMapping("/stores")
 public class StoreController {
 
     private final StoreService storeService;
@@ -26,16 +26,15 @@ public class StoreController {
     }
 
     //전체 상점 조회
-    @GetMapping("/all")
+    @GetMapping("")
     public StoreResult findAll() {
         return storeService.findAll();
     }
 
     //id로 상점 조회
-    @GetMapping(value = "/detail", params = "id")
+    @GetMapping(value = "/store", params = "id")
     public StoreResponse findOneById(@RequestParam Long id) {
         return storeService.findOneById(id);
     }
 
-    //하나의 상점에 속하는 모든 상품 조회 -> ProductController 에 만듦.
 }
