@@ -55,5 +55,4 @@ public class StoreService {
         return StoreResponse.from(store);
     }
 
-    //하나의 상점에 속하는 모든 상품 조회 -> ProductService 에 추가
 }
