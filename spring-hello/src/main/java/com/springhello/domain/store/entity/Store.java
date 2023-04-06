@@ -18,7 +18,8 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Store {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -41,7 +42,7 @@ public class Store {
         this.products = products;
     }
 
-    public static Store createStore(String name, Address address, Phone phone){
+    public static Store createStore(String name, Address address, Phone phone) {
         return Store.builder()
                 .name(name)
                 .address(address)

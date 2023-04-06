@@ -8,7 +8,8 @@ import org.hibernate.validator.constraints.Range;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
 public class ProductSaveRequest {
 
@@ -20,4 +21,6 @@ public class ProductSaveRequest {
 
     @NotNull
     private Long storeId;
+
+
 }

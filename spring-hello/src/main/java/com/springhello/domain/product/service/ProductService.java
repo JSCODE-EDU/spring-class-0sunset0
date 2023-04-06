@@ -25,7 +25,7 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final StoreRepository storeRepository;
 
-    public ProductResult findAll(){
+    public ProductResult findAll() {
         List<ProductResponse> productResponse = productRepository.findAll().stream()
                 .map(product -> ProductResponse.from(product))
                 .collect(Collectors.toList());
