@@ -31,25 +31,26 @@ public class Product {
     private Store store;
 
     @Builder
-    private Product(Long id, String name, Long price) {
+    private Product(Long id, String name, Long price, Store store) {
         this.id = id;
         this.name = name;
         this.price = price;
+        this.assignStore(store);
     }
 
     public static Product createProduct(String name, Long price, Store store) {
         Product product = Product.builder()
                 .name(name)
                 .price(price)
+                .store(store)
                 .build();
-        product.assignStore(store);
         return product;
     }
 
     /**
      * 연관관계 편의 메서드
      */
-    public void assignStore(Store store) {
+    private void assignStore(Store store) {
         this.store = store;
         store.getProducts().add(this);
     }
