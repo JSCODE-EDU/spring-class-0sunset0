@@ -2,7 +2,6 @@ package com.springhello.domain.store.dto.response;
 
 
 import com.springhello.domain.store.entity.Store;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
