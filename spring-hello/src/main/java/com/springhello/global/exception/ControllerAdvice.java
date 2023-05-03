@@ -13,23 +13,22 @@ public class ControllerAdvice {
     @ExceptionHandler(DuplicateException.class)
     public ResponseEntity<ErrorResponse> duplicateExHandler(DuplicateException e) {
         ErrorResponse errorResponse = new ErrorResponse(e.getMessage());
-        return new ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST);
+        return ResponseEntity.badRequest().body(errorResponse);
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ErrorResponse> notFoundExHandler(NotFoundException e) {
         ErrorResponse errorResponse = new ErrorResponse(e.getMessage());
-        return new ResponseEntity(errorResponse, HttpStatus.NOT_FOUND);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> exHandler(Exception e) {
         ErrorResponse errorResponse = new ErrorResponse("내부 오류");
-        return new ResponseEntity(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
     }
 
     //TODO: MethodArgumentNotValidException, BindException
-    //TODO: 생성자로 ResponseEntity 생성 X
 }
