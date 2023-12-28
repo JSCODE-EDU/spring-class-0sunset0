@@ -1,11 +1,12 @@
 package com.springhello.domain.product.dto.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class ProductSaveResponse {
 
-    private final Long id;
+    private Long id;
 }

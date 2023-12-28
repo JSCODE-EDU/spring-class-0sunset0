@@ -1,8 +1,7 @@
 package com.springhello.domain.product.service;
 
-import com.springhello.domain.product.dto.response.ProductResult;
+import com.springhello.domain.product.dto.response.ProductsResponse;
 import com.springhello.domain.product.dto.response.ProductSaveResponse;
-import com.springhello.domain.product.entity.MonetaryUnit;
 import com.springhello.domain.product.dto.response.ProductResponse;
 import com.springhello.domain.product.dto.request.ProductSaveRequest;
 import com.springhello.domain.product.exception.DuplicateNameException;
@@ -13,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,11 +19,9 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     //모든 상품 찾기
-    public ProductResult findAll() {
-        List<ProductResponse> productResponses = productRepository.findAll().stream()
-                .map(p -> ProductResponse.from(p))
-                .collect(Collectors.toList());
-        return new ProductResult(productResponses);
+    public ProductsResponse findAll() {
+        List<Product> products = productRepository.findAll();
+        return ProductsResponse.from(products);
     }
 
     //상품 저장
@@ -42,30 +38,15 @@ public class ProductService {
         }
     }
 
-    public ProductResponse findOneById(Long id, String monetaryUnit) {
+    public ProductResponse findOneById(Long id) {
         Product findProduct = productRepository.findOneById(id).get();
-        ProductResponse productResponse = ProductResponse.from(findProduct);
-        return getProductResponse(monetaryUnit, productResponse);
+        return ProductResponse.from(findProduct);
     }
 
-    public ProductResponse findOneByName(String name, String monetaryUnit) {
+    public ProductResponse findOneByName(String name) {
         // 없는 상품명으로 조회했을 때 조회 실패
         Product findProduct = productRepository.findOneByName(name)
                 .orElseThrow(() -> new ProductNotFoundException());
-        ProductResponse productResponse = ProductResponse.from(findProduct);
-        return getProductResponse(monetaryUnit, productResponse);
-    }
-
-
-    private ProductResponse getProductResponse(String monetaryUnit, ProductResponse productResponse) {
-        if (monetaryUnit != null && monetaryUnit.equals("dollar")){
-            productResponse.setMonetaryUnit(MonetaryUnit.DOLLAR);
-            productResponse.setPrice(changeToDollar(productResponse.getPrice()));
-        }
-        return productResponse;
-    }
-
-    private Long changeToDollar(Long won) {
-        return won/1300; //TODO 환율의 변화가 생겼을 때 변경하지 않아도 되게 하기
+        return ProductResponse.from(findProduct);
     }
 }

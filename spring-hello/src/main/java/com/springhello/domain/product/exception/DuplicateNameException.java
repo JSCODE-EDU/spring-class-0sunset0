@@ -1,8 +1,12 @@
 package com.springhello.domain.product.exception;
 
-public class DuplicateNameException extends RuntimeException{
+import com.springhello.global.exception.BaseException;
+
+public class DuplicateNameException extends BaseException {
+
+    private static final String MESSAGE = "중복되는 상품명입니다.";
 
     public DuplicateNameException() {
-        super("중복되는 상품명입니다.");
+        super(MESSAGE);
     }
 }

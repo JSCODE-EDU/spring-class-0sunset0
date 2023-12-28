@@ -14,13 +14,13 @@ public class ProductRepository {
     private static long sequence = 0L;
 
     public ProductRepository() {
-        products.add(Product.createProduct(++sequence, "키보드", 50000L));
-        products.add(Product.createProduct(++sequence, "마우스", 10000L));
-        products.add(Product.createProduct(++sequence, "모니터", 200000L));
+        products.add(Product.createProduct(++sequence, "키보드", 50000));
+        products.add(Product.createProduct(++sequence, "마우스", 10000));
+        products.add(Product.createProduct(++sequence, "모니터", 200000));
     }
 
 
-    public Long save(String name, Long price) {
+    public Long save(String name, Integer price) {
         Product saveProduct = Product.createProduct(sequence++, name, price);
         products.add(saveProduct);
         return saveProduct.getId();
@@ -33,15 +33,13 @@ public class ProductRepository {
 
     public Optional<Product> findOneById(Long id) {
         return products.stream()
-                .filter(p -> p.isSameId(id))
+                .filter(products -> products.isSameId(id))
                 .findAny();
     }
 
     public Optional<Product> findOneByName(String name) {
         return products.stream()
-                .filter(p -> p.isSameName(name))
+                .filter(products -> products.isSameName(name))
                 .findAny();
     }
-
-
 }
