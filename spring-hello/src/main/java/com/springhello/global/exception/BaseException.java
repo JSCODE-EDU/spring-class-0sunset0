@@ -1,4 +1,4 @@
 package com.springhello.global.exception;
 
-public class BaseException {
+public class BaseException extends RuntimeException{
 }

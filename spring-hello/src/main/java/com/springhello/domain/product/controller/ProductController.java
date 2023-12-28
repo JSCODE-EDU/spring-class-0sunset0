@@ -1,4 +1,4 @@
-package com.springhello.domain.product.api;
+package com.springhello.domain.product.controller;
 
 import com.springhello.domain.product.dto.response.ProductResponse;
 import com.springhello.domain.product.dto.response.ProductResult;
@@ -10,7 +10,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
