@@ -5,6 +5,7 @@ import org.springframework.boot.context.properties.bind.BindException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ControllerAdvice {
 
     //validation 에러
-    @ExceptionHandler(BindException.class)
+    @ExceptionHandler({BindException.class, MethodArgumentNotValidException.class})
     public ResponseEntity<ErrorResponse> methodArgumentNotValidExceptionHandler(BindingResult bindResult){
         HttpStatus httpStatus = ExceptionStatus.INVALID_INPUT_VALUE.getHttpStatus();
         int httpCode = ExceptionStatus.INVALID_INPUT_VALUE.getHttpCode();
