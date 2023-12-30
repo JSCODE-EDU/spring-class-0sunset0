@@ -39,12 +39,12 @@ public class ProductService {
         }
     }
 
-    public ProductResponse findOneById(Long id) {
+    public ProductResponse findOneById(Long id, String monetaryUnit) {
         Product findProduct = productRepository.findOneById(id).get();
         return ProductResponse.from(findProduct);
     }
 
-    public ProductResponse findOneByName(String name) {
+    public ProductResponse findOneByName(String name, String monetaryUnit) {
         // 없는 상품명으로 조회했을 때 조회 실패
         Product findProduct = productRepository.findOneByName(name)
                 .orElseThrow(() -> new ProductNotFoundException(ExceptionStatus.PRODUCT_NOT_FOUND));
