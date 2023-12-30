@@ -30,6 +30,6 @@ public class Product {
     }
 
     public boolean isSameName(String name) {
-        return this.id.equals(name);
+        return this.name.equals(name);
     }
 }

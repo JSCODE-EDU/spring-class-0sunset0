@@ -30,7 +30,7 @@ public class ControllerAdvice {
         HttpStatus httpStatus = ex.exceptionStatus.getHttpStatus();
 
         int httpCode = ex.exceptionStatus.getHttpCode();
-        String message = ex.getMessage();
+        String message = ex.exceptionStatus.getMessage();
 
         log.warn("{} - {}", ex.getClass().getSimpleName(), message);
         return ResponseEntity.status(httpStatus)
@@ -43,6 +43,7 @@ public class ControllerAdvice {
         String message = ExceptionStatus.INTERNAL_SERVER_ERROR.getMessage();
 
         log.warn("{} - {}", ex.getClass().getSimpleName(), message);
+        ex.printStackTrace();
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ErrorResponse.of(httpCode, message));
     }

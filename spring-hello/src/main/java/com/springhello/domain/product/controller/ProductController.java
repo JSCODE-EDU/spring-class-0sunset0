@@ -22,26 +22,28 @@ public class ProductController {
     //모든 상품 조회
     @GetMapping("/products")
     public ResponseEntity<ProductsResponse> findAll() {
-        return ResponseEntity.status(HttpStatus.OK).body(productService.findAll());
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(productService.findAll());
     }
 
     //상품 등록
     @PostMapping("/save")
     public ResponseEntity<ProductSaveResponse> save(@Valid @RequestBody ProductSaveRequest productSaveRequest) {
-        return ResponseEntity.status(HttpStatus.OK).body(productService.save(productSaveRequest));
-
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(productService.save(productSaveRequest));
     }
 
     //id로 상품 조회
-    @GetMapping(value = "/product", params = "id")
-    public ResponseEntity<ProductResponse> findOneById(@RequestParam Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(productService.findOneById(id));
-
+    @GetMapping(value = "/product/{id}")
+    public ResponseEntity<ProductResponse> findOneById(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(productService.findOneById(id));
     }
 
     //이름으로 상품 조회
     @GetMapping(value = "/product", params = "name")
     public ResponseEntity<ProductResponse> findOneByName(@RequestParam String name) {
-        return ResponseEntity.status(HttpStatus.OK).body(productService.findOneByName(name));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(productService.findOneByName(name));
     }
 }
