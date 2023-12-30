@@ -1,7 +1,9 @@
 package com.springhello.global.exception;
 
 public class BaseException extends RuntimeException{
-    public BaseException(String message) {
-        super(message);
+
+    ExceptionStatus exceptionStatus;
+    public BaseException(ExceptionStatus exceptionStatus) {
+        this.exceptionStatus = exceptionStatus;
     }
 }

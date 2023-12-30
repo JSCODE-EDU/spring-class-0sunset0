@@ -8,6 +8,7 @@ import com.springhello.domain.product.exception.DuplicateNameException;
 import com.springhello.domain.product.exception.ProductNotFoundException;
 import com.springhello.domain.product.repository.ProductRepository;
 import com.springhello.domain.product.entity.Product;
+import com.springhello.global.exception.ExceptionStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +35,7 @@ public class ProductService {
     //상품명 중복 검사
     private void checkProductDuplicateName(String name) {
         if (productRepository.findOneByName(name).isPresent()) {
-            throw new DuplicateNameException();
+            throw new DuplicateNameException(ExceptionStatus.DUPLICATE_PRODUCT_NAME);
         }
     }
 
@@ -46,7 +47,7 @@ public class ProductService {
     public ProductResponse findOneByName(String name) {
         // 없는 상품명으로 조회했을 때 조회 실패
         Product findProduct = productRepository.findOneByName(name)
-                .orElseThrow(() -> new ProductNotFoundException());
+                .orElseThrow(() -> new ProductNotFoundException(ExceptionStatus.PRODUCT_NOT_FOUND));
         return ProductResponse.from(findProduct);
     }
 }
