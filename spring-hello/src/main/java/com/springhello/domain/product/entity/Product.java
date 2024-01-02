@@ -8,16 +8,16 @@ public class Product {
 
     private final Long id;
     private final String name;
-    private final Integer price;
+    private final Double price;
 
     @Builder
-    private Product(Long id, String name, Integer price) {
+    private Product(Long id, String name, Double price) {
         this.id = id;
         this.name = name;
         this.price = price;
     }
 
-    public static Product createProduct(Long id, String name, Integer price) {
+    public static Product createProduct(Long id, String name, Double price) {
         return Product.builder()
                 .id(id)
                 .name(name)

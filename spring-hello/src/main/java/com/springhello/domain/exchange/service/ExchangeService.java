@@ -3,7 +3,6 @@ package com.springhello.domain.exchange.service;
 import com.springhello.domain.exchange.dto.ExchangeRateResponse;
 import com.springhello.global.exception.BaseException;
 import com.springhello.global.exception.ExceptionStatus;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -13,11 +12,11 @@ public class ExchangeService {
     private static final String API_KEY = "181635d3b50bee25a127b54e";
     private static final String BASE_URL = "https://open.er-api.com/v6/latest/KRW?apikey=" + API_KEY;
 
-//    public Double convertWonIntoDollar(int won) {
-//        Double exchangeRateUSD = getExchangeRateUSD();
-//        double dollar = won / exchangeRateUSD;
-//        return dollar;
-//    }
+    public Double convertWonIntoDollar(double won) {
+        Double exchangeRateUSD = getExchangeRateUSD();
+        double dollar = won * exchangeRateUSD;
+        return dollar;
+    }
 
     public Double getExchangeRateUSD() {
         WebClient webClient = WebClient.create();

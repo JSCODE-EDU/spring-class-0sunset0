@@ -9,9 +9,14 @@ import lombok.Getter;
 public class ProductResponse {
 
     private String name;
-    private Integer price;
+    private Double price;
+    private String monetaryUnit;
 
-    public static ProductResponse from(Product product) {
-        return new ProductResponse(product.getName(), product.getPrice());
+    public static ProductResponse fromProductDollarPrice(Product product, Double dollarPrice) {
+        return new ProductResponse(product.getName(), dollarPrice, MonetaryUnitView.DOLLAR.getValue());
+    }
+
+    public static ProductResponse fromProductWonPrice(Product product, Double wonPrice) {
+        return new ProductResponse(product.getName(), wonPrice, MonetaryUnitView.WON.getValue());
     }
 }

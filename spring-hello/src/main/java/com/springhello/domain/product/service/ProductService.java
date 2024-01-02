@@ -1,9 +1,11 @@
 package com.springhello.domain.product.service;
 
+import com.springhello.domain.exchange.service.ExchangeService;
 import com.springhello.domain.product.dto.response.ProductsResponse;
 import com.springhello.domain.product.dto.response.ProductSaveResponse;
 import com.springhello.domain.product.dto.response.ProductResponse;
 import com.springhello.domain.product.dto.request.ProductSaveRequest;
+import com.springhello.domain.product.entity.MonetaryUnit;
 import com.springhello.domain.product.exception.DuplicateNameException;
 import com.springhello.domain.product.exception.ProductNotFoundException;
 import com.springhello.domain.product.repository.ProductRepository;
@@ -18,6 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
+    private final ExchangeService exchangeService;
 
     //모든 상품 찾기
     public ProductsResponse findAll() {
@@ -41,13 +44,17 @@ public class ProductService {
 
     public ProductResponse findOneById(Long id, String monetaryUnit) {
         Product findProduct = productRepository.findOneById(id).get();
-        return ProductResponse.from(findProduct);
+        if (MonetaryUnit.valueOf(monetaryUnit).equals(MonetaryUnit.DOLLAR)) {
+            Double dollar = exchangeService.convertWonIntoDollar(findProduct.getPrice());
+            return ProductResponse.fromProductDollarPrice(findProduct, dollar);
+        }
+        return ProductResponse.fromProductWonPrice(findProduct, findProduct.getPrice());
     }
 
     public ProductResponse findOneByName(String name, String monetaryUnit) {
         // 없는 상품명으로 조회했을 때 조회 실패
         Product findProduct = productRepository.findOneByName(name)
                 .orElseThrow(() -> new ProductNotFoundException(ExceptionStatus.PRODUCT_NOT_FOUND));
-        return ProductResponse.from(findProduct);
+        return ProductResponse.fromProductWonPrice(findProduct, findProduct.getPrice());
     }
 }

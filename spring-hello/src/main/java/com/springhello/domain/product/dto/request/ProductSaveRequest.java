@@ -19,5 +19,5 @@ public class ProductSaveRequest {
     private String name;
 
     @Range(max = MAX_PRICE)
-    private Integer price;
+    private Double price;
 }
