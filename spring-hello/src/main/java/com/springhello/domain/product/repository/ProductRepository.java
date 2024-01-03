@@ -16,13 +16,13 @@ public class ProductRepository {
     private static long sequence = 0L;
 
     public ProductRepository() {
-        products.add(Product.createProduct(++sequence, "키보드", 50000.0));
-        products.add(Product.createProduct(++sequence, "마우스", 10000.0));
-        products.add(Product.createProduct(++sequence, "모니터", 200000.0));
+        products.add(Product.createProduct(++sequence, "키보드", 50000f));
+        products.add(Product.createProduct(++sequence, "마우스", 10000f));
+        products.add(Product.createProduct(++sequence, "모니터", 200000f));
     }
 
 
-    public Long save(String name, Double price) {
+    public Long save(String name, Float price) {
         Product saveProduct = Product.createProduct(sequence++, name, price);
         products.add(saveProduct);
         return saveProduct.getId();

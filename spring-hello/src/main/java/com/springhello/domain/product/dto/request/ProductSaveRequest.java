@@ -1,5 +1,6 @@
 package com.springhello.domain.product.dto.request;
 
+import com.springhello.global.common.BusinessConstant;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,5 +20,5 @@ public class ProductSaveRequest {
     private String name;
 
     @Range(max = MAX_PRICE)
-    private Double price;
+    private int price;
 }

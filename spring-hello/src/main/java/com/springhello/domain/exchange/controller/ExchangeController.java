@@ -16,7 +16,7 @@ public class ExchangeController {
     private final ExchangeService exchangeService;
 
     @GetMapping("/exchange")
-    public Double exchange() {
+    public Float exchange() {
         return exchangeService.getExchangeRateUSD();
     }
 }

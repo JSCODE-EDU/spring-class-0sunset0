@@ -9,14 +9,14 @@ import lombok.Getter;
 public class ProductResponse {
 
     private String name;
-    private Double price;
+    private Float price;
     private String monetaryUnit;
 
-    public static ProductResponse fromProductDollarPrice(Product product, Double dollarPrice) {
+    public static ProductResponse fromProductDollarPrice(Product product, Float dollarPrice) {
         return new ProductResponse(product.getName(), dollarPrice, MonetaryUnitView.DOLLAR.getValue());
     }
 
-    public static ProductResponse fromProductWonPrice(Product product, Double wonPrice) {
+    public static ProductResponse fromProductWonPrice(Product product, Float wonPrice) {
         return new ProductResponse(product.getName(), wonPrice, MonetaryUnitView.WON.getValue());
     }
 }

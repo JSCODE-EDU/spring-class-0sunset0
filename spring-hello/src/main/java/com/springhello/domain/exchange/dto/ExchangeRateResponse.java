@@ -16,6 +16,6 @@ public class ExchangeRateResponse {
     @Getter
     public static class Rates {
         @JsonProperty("USD")
-        private Double usd;
+        private Float usd;
     }
 }

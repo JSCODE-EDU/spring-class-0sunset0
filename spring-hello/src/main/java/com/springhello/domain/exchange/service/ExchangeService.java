@@ -12,13 +12,13 @@ public class ExchangeService {
     private static final String API_KEY = "181635d3b50bee25a127b54e";
     private static final String BASE_URL = "https://open.er-api.com/v6/latest/KRW?apikey=" + API_KEY;
 
-    public Double convertWonIntoDollar(double won) {
-        Double exchangeRateUSD = getExchangeRateUSD();
-        double dollar = won * exchangeRateUSD;
+    public Float convertWonIntoDollar(double won) {
+        Float exchangeRateUSD = getExchangeRateUSD();
+        float dollar = (float) (won * exchangeRateUSD);
         return dollar;
     }
 
-    public Double getExchangeRateUSD() {
+    public Float getExchangeRateUSD() {
         WebClient webClient = WebClient.create();
         ExchangeRateResponse response = webClient.get()
                 .uri(BASE_URL)
