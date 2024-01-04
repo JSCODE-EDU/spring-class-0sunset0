@@ -36,7 +36,7 @@ public class ProductController {
     //id로 상품 조회
     @GetMapping(value = "/product/{id}")
     public ResponseEntity<ProductResponse> findOneById(@PathVariable Long id,
-                                                       @RequestParam String monetaryUnit) {
+                                                       @RequestParam(defaultValue = "WON") String monetaryUnit) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(productService.findOneById(id, monetaryUnit));
     }
@@ -44,7 +44,7 @@ public class ProductController {
     //이름으로 상품 조회
     @GetMapping(value = "/product", params = "name")
     public ResponseEntity<ProductResponse> findOneByName(@RequestParam String name,
-                                                         @RequestParam String monetaryUnit) {
+                                                         @RequestParam(defaultValue = "WON") String monetaryUnit) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(productService.findOneByName(name, monetaryUnit));
     }

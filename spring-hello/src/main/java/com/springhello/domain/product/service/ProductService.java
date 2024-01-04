@@ -1,13 +1,12 @@
 package com.springhello.domain.product.service;
 
 import com.springhello.domain.exchange.service.ExchangeService;
-import com.springhello.domain.product.dto.response.MonetaryUnitView;
 import com.springhello.domain.product.dto.response.ProductsResponse;
 import com.springhello.domain.product.dto.response.ProductSaveResponse;
 import com.springhello.domain.product.dto.response.ProductResponse;
 import com.springhello.domain.product.dto.request.ProductSaveRequest;
-import com.springhello.domain.product.exception.DuplicateNameException;
-import com.springhello.domain.product.exception.ProductNotFoundException;
+import com.springhello.domain.product.entity.MonetaryUnit;
+import com.springhello.domain.product.exception.ProductException;
 import com.springhello.domain.product.repository.ProductRepository;
 import com.springhello.domain.product.entity.Product;
 import com.springhello.global.exception.ExceptionStatus;
@@ -38,7 +37,7 @@ public class ProductService {
     //상품명 중복 검사
     private void checkProductDuplicateName(String name) {
         if (productRepository.findOneByName(name).isPresent()) {
-            throw new DuplicateNameException(ExceptionStatus.DUPLICATE_PRODUCT_NAME);
+            throw new ProductException(ExceptionStatus.DUPLICATE_PRODUCT_NAME);
         }
     }
 
@@ -50,16 +49,20 @@ public class ProductService {
     public ProductResponse findOneByName(String name, String monetaryUnit) {
         // 없는 상품명으로 조회했을 때 조회 실패
         Product findProduct = productRepository.findOneByName(name)
-                .orElseThrow(() -> new ProductNotFoundException(ExceptionStatus.PRODUCT_NOT_FOUND));
+                .orElseThrow(() -> new ProductException(ExceptionStatus.PRODUCT_NOT_FOUND));
         return getProductResponseByMonetaryUnit(monetaryUnit, findProduct);
     }
 
     private ProductResponse getProductResponseByMonetaryUnit(String monetaryUnit, Product findProduct) {
-        if (MonetaryUnitView.valueOf(monetaryUnit).equals(MonetaryUnitView.DOLLAR.getValue())) {
+
+        //TODO: enum에 책임 밀어 넣기, 입력값 체크는 뷰 단에서 하자
+        if (monetaryUnit.equals(MonetaryUnit.WON.name())) {
+            return ProductResponse.from(findProduct, findProduct.getPrice(), MonetaryUnit.WON.name());
+        } else if (monetaryUnit.equals(MonetaryUnit.DOLLAR.name())) {
             Float dollar = exchangeService.convertWonIntoDollar(findProduct.getPrice());
-            return ProductResponse.fromProductDollarPrice(findProduct, dollar);
+            return ProductResponse.from(findProduct, dollar, MonetaryUnit.DOLLAR.name());
         } else {
-            return ProductResponse.fromProductWonPrice(findProduct, findProduct.getPrice());
+            throw new ProductException(ExceptionStatus.INVALID_INPUT_VALUE);
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.springhello.domain.product.dto.response;
 
+import com.springhello.domain.product.entity.MonetaryUnit;
 import com.springhello.domain.product.entity.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +16,7 @@ public class ProductsResponse {
 
     public static ProductsResponse from(List<Product> products) {
         List<ProductResponse> productResponses = products.stream()
-                .map(product -> ProductResponse.fromProductWonPrice(product, product.getPrice()))
+                .map(product -> ProductResponse.from(product, product.getPrice(), MonetaryUnit.WON.name()))
                 .toList();
         return new ProductsResponse(productResponses);
     }
