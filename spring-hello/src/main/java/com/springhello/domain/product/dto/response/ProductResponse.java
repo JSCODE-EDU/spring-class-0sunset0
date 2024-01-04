@@ -13,7 +13,7 @@ public class ProductResponse {
     private Float price;
     private String monetaryUnit;
 
-    public static ProductResponse from(Product product, Float dollarPrice, String monetaryUnit) {
-        return new ProductResponse(product.getName(), dollarPrice, monetaryUnit);
+    public static ProductResponse from(Product product, Float dollarPrice, MonetaryUnit monetaryUnit) {
+        return new ProductResponse(product.getName(), dollarPrice, monetaryUnit.getValue());
     }
 }

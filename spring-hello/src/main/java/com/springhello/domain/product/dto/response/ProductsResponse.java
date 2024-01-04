@@ -16,7 +16,7 @@ public class ProductsResponse {
 
     public static ProductsResponse from(List<Product> products) {
         List<ProductResponse> productResponses = products.stream()
-                .map(product -> ProductResponse.from(product, product.getPrice(), MonetaryUnit.WON.name()))
+                .map(product -> ProductResponse.from(product, product.getPrice(), MonetaryUnit.WON))
                 .toList();
         return new ProductsResponse(productResponses);
     }

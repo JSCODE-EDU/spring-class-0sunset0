@@ -41,28 +41,28 @@ public class ProductService {
         }
     }
 
-    public ProductResponse findOneById(Long id, String monetaryUnit) {
+    public ProductResponse findOneById(Long id, String monetaryUnitStr) {
         Product findProduct = productRepository.findOneById(id).get();
-        return getProductResponseByMonetaryUnit(monetaryUnit, findProduct);
+        return getProductResponseByMonetaryUnit(monetaryUnitStr, findProduct);
     }
 
-    public ProductResponse findOneByName(String name, String monetaryUnit) {
+    public ProductResponse findOneByName(String name, String monetaryUnitStr) {
         // 없는 상품명으로 조회했을 때 조회 실패
         Product findProduct = productRepository.findOneByName(name)
                 .orElseThrow(() -> new ProductException(ExceptionStatus.PRODUCT_NOT_FOUND));
-        return getProductResponseByMonetaryUnit(monetaryUnit, findProduct);
+        return getProductResponseByMonetaryUnit(monetaryUnitStr, findProduct);
     }
 
-    private ProductResponse getProductResponseByMonetaryUnit(String monetaryUnit, Product findProduct) {
-
-        //TODO: enum에 책임 밀어 넣기, 입력값 체크는 뷰 단에서 하자
-        if (monetaryUnit.equals(MonetaryUnit.WON.name())) {
-            return ProductResponse.from(findProduct, findProduct.getPrice(), MonetaryUnit.WON.name());
-        } else if (monetaryUnit.equals(MonetaryUnit.DOLLAR.name())) {
-            Float dollar = exchangeService.convertWonIntoDollar(findProduct.getPrice());
-            return ProductResponse.from(findProduct, dollar, MonetaryUnit.DOLLAR.name());
-        } else {
-            throw new ProductException(ExceptionStatus.INVALID_INPUT_VALUE);
+    private ProductResponse getProductResponseByMonetaryUnit(String monetaryUnitStr, Product findProduct) {
+        MonetaryUnit monetaryUnit = MonetaryUnit.from(monetaryUnitStr);
+        switch (monetaryUnit) {
+            case WON:
+                return ProductResponse.from(findProduct, findProduct.getPrice(), monetaryUnit);
+            case DOLLAR:
+                Float dollar = exchangeService.convertWonIntoDollar(findProduct.getPrice());
+                return ProductResponse.from(findProduct, dollar, monetaryUnit);
+            default:
+                throw new ProductException(ExceptionStatus.INVALID_INPUT_VALUE);
         }
     }
 }

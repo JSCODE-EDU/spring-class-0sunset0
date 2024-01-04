@@ -36,16 +36,18 @@ public class ProductController {
     //id로 상품 조회
     @GetMapping(value = "/product/{id}")
     public ResponseEntity<ProductResponse> findOneById(@PathVariable Long id,
-                                                       @RequestParam(defaultValue = "WON") String monetaryUnit) {
+                                                       @RequestParam(defaultValue = "won", name = "monetaryUnit")
+                                                       String monetaryUnitStr) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(productService.findOneById(id, monetaryUnit));
+                .body(productService.findOneById(id, monetaryUnitStr));
     }
 
     //이름으로 상품 조회
     @GetMapping(value = "/product", params = "name")
     public ResponseEntity<ProductResponse> findOneByName(@RequestParam String name,
-                                                         @RequestParam(defaultValue = "WON") String monetaryUnit) {
+                                                         @RequestParam(defaultValue = "won", name = "monetaryUnit")
+                                                         String monetaryUnitStr) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(productService.findOneByName(name, monetaryUnit));
+                .body(productService.findOneByName(name, monetaryUnitStr));
     }
 }
