@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    url: jdbc:mysql://127.0.0.1:3306/jscode
+    password: "@sun0896180"
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database: mysql
+    show-sql: 'true'
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+  logging:
+    level:
+      org:
+        springframework:
+          jdbc: debug

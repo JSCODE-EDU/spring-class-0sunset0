@@ -2,13 +2,14 @@ package com.springhello.domain.student;
 
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 
 @Entity
-@Table
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@DynamicInsert
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
