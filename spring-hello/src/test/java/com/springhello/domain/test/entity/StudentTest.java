@@ -1,6 +1,6 @@
 package com.springhello.domain.test.entity;
 
-import com.springhello.domain.student.Student;
+import com.springhello.domain.student.entity.Student;
 import com.springhello.domain.student.repository.StudentRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

@@ -1,4 +1,4 @@
-package com.springhello.domain.student;
+package com.springhello.domain.student.entity;
 
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
