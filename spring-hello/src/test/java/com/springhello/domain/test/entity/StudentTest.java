@@ -1,5 +1,6 @@
 package com.springhello.domain.test.entity;
 
+import com.springhello.domain.student.Student;
 import com.springhello.domain.test.repository.StudentRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -13,7 +14,6 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("Student 클래스")
 @ExtendWith(SpringExtension.class)
 @SpringBootTest

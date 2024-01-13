@@ -1,16 +1,14 @@
 package com.springhello.domain.student;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
 @Entity
 @Table
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,5 +21,9 @@ public class Student {
     @ColumnDefault("'basic'")
     private String classes;
 
-
+    @Builder
+    private Student(String name, String classes) {
+        this.name = name;
+        this.classes = classes;
+    }
 }
