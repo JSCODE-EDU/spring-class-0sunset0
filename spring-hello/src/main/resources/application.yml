@@ -14,7 +14,7 @@ spring:
     hibernate:
       ddl-auto: update
     generate-ddl: true
-  logging:s
+  logging:
     level:
       org:
         springframework:
